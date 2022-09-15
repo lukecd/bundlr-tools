@@ -1,5 +1,5 @@
 import React from "react";
-
+import WalletBalance from "../components/WalletBalance";
 const BalancePage = () => {
 	return (
 		<div
@@ -16,10 +16,7 @@ const BalancePage = () => {
 				</div>
 
 				<div className="px-5 w-full">
-					<div>
-						<p className="pl-20 pr-20 leading-7"></p>
-						<p className="ml-10 mt-5 pl-20 pr-20 leading-7"></p>
-					</div>
+					<div></div>
 				</div>
 			</div>
 		</div>
