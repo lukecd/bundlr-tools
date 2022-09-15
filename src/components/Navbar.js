@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Logo from "../assets/umbrella-64.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-scroll";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 /**
  * @returns Top navigation bar
@@ -62,6 +63,10 @@ const Navbar = () => {
 					</Link>
 				</li>
 			</ul>
+			<div className="pr-5">
+				<ConnectButton />
+			</div>
+
 			{/* hamburger */}
 			<div onClick={handleClick} className="md:hidden z-10">
 				{!nav ? <FaBars /> : <FaTimes />}
