@@ -25,7 +25,7 @@ const AboutPage = () => {
 						<p className="ml-10 mt-5 pl-20 pr-20 leading-7">
 							<ol className="list-decimal list-outside">
 								<li>
-									<a href="https://adams.exchange" target="_blank" className="underline">
+									<a href="" target="_blank" className="underline">
 										Read a blog post detailing these components.
 									</a>
 								</li>
@@ -34,6 +34,7 @@ const AboutPage = () => {
 										See more of my work.
 									</a>
 								</li>
+								<li>Customize colors in tailwind.config</li>
 								<li>
 									ps: These are UNOFFICIAL components. !supported by Bundlr or anything
 									like that.

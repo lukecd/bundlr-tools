@@ -2,89 +2,37 @@ import React from "react";
 import { Fragment, useState, useEffect } from "react";
 import { WebBundlr } from "@bundlr-network/client";
 import { getDefaultProvider } from "ethers";
+import { useBalance, useAccount, useContract, useContractEvent, useProvider, useSigner } from "wagmi";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
-const WalletBalance = (props) => {
-	const [loadedBalance, setLoadedBalance] = useState();
-	const [loadedBalanceDecimal, setLoadedBalanceDecimal] = useState();
-	const [loadedBalanceUSD, setLoadedBalanceUSD] = useState();
-	const [showCryptoBalance, setShowCryptoBalance] = useState();
-	const [showUSDBalance, setShowUSDBalance] = useState();
-
+const FundWallet = (props) => {
 	// const [bundlerHttpAddress, setBundlerHttpAddress] = useState("https://node1.bundlr.network");
 	const [bundlerHttpAddress, setBundlerHttpAddress] = useState("https://devnet.bundlr.network");
+	const { data: signer, isError: isSignerError, isLoading: isSignerLoading } = useSigner();
 
 	const [rpcUrl, setRpcUrl] = useState();
 	const [contractAddress, setContractAddress] = useState();
 	const [ethPrice, setEthPrice] = useState(0);
 	const [maticPrice, setMaticPrice] = useState(0);
 
+	const provider = useProvider();
+
 	const currencies = [
-		{ symbol: "ETH", name: "ethereum" },
-		{ symbol: "MATIC", name: "matic" },
+		{ symbol: "ETH", name: "ethereum", address: "" },
+		{ symbol: "MATIC", name: "matic", address: "0x0000000000000000000000000000000000001010" },
 	];
 	const [selected, setSelected] = useState(currencies[1]);
 
 	useEffect(() => {
-		console.log("selected=", selected);
-		setShowCryptoBalance(props.showCryptoBalance);
-		setShowUSDBalance(props.showUSDBalance);
 		try {
-			// get ETH and MATIC prices using free 0x.org api.
-			// feel free to swtich to any other data provider
-
-			try {
-				let ePrice, mPrice;
-				const getBaseAssetPrices = async () => {
-					ePrice = await fetch(
-						"https://api.0x.org/swap/v1/price?sellToken=ETH&buyToken=DAI&sellAmount=1000000000000000000",
-					);
-					ePrice = await ePrice.json();
-					setEthPrice(ePrice.price);
-
-					mPrice = await fetch(
-						"https://api.0x.org/swap/v1/price?sellToken=MATIC&buyToken=DAI&sellAmount=1000000000000000000",
-					);
-					mPrice = await mPrice.json();
-					setMaticPrice(mPrice.price);
-				};
-				getBaseAssetPrices();
-			} catch (e) {
-				console.log(e);
+			if (signer) {
 			}
-
-			// create our bundlr object
 			const bundlr = new WebBundlr(bundlerHttpAddress, selected.name, getDefaultProvider());
-
-			const getLoadedBalance = async () => {
-				console.log("getting balance currency=", selected.name);
-				const curBalance = await bundlr.getLoadedBalance();
-				setLoadedBalance(curBalance.toString());
-				setLoadedBalanceDecimal(bundlr.utils.unitConverter(curBalance).toFixed(7, 2).toString());
-				if (selected.name == "matic") {
-					console.log("setting balance usd matic mPrice=", maticPrice);
-					setLoadedBalanceUSD(
-						bundlr.utils
-							.unitConverter(curBalance / maticPrice)
-							.toFixed(7, 2)
-							.toString(),
-					);
-				} else if (selected.name == "etherem") {
-					console.log("setting balance usd matic mPrice=", ethPrice);
-					setLoadedBalanceUSD(
-						bundlr.utils
-							.unitConverter(curBalance / ethPrice)
-							.toFixed(7, 2)
-							.toString(),
-					);
-				}
-			};
-			getLoadedBalance();
 		} catch (e) {
 			console.log(e);
 		}
-	}, [selected, ethPrice, maticPrice]);
+	}, [signer]);
 
 	const classNames = (...classes) => {
 		return classes.filter(Boolean).join(" ");
@@ -92,8 +40,14 @@ const WalletBalance = (props) => {
 
 	return (
 		<div className="flex flex-row items-center px-2 py-2 border-2 border-primary rounded-lg drop-shadow-lg">
-			<div className="pr-5">${loadedBalanceUSD}</div>
-			<div className="">{loadedBalanceDecimal}</div>
+			<div>
+				<input
+					class=" w-full rounded py-1 px-2 leading-tight focus:outline-none bg-primary text-text"
+					id="grid-first-name"
+					type="number"
+					placeholder=" amount"
+				/>
+			</div>
 			<div className="pl-3 w-48">
 				<Listbox value={selected} onChange={setSelected}>
 					<div className="relative mt-1">
@@ -143,8 +97,11 @@ const WalletBalance = (props) => {
 					</div>
 				</Listbox>
 			</div>
+			<div className="px-4">
+				<button class="bg-primary hover:bg-blue-700 text-text py-1 px-5 rounded">fund</button>
+			</div>
 		</div>
 	);
 };
 
-export default WalletBalance;
+export default FundWallet;

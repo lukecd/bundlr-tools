@@ -1,0 +1,152 @@
+From e8a9c9f005a91143b2d40b994d647bda0947e134 Mon Sep 17 00:00:00 2001
+From: JesseTheRobot <jesse.cruz.wright@gmail.com>
+Date: Thu, 15 Sep 2022 09:43:02 +0000
+Subject: [PATCH] Fix: Remove zlib, polyfill using browserify-zlib
+
+---
+ config-overrides.js |  1 +
+ package-lock.json   | 44 ++++++++++++++++++++++++++++----------------
+ package.json        |  4 ++--
+ 3 files changed, 31 insertions(+), 18 deletions(-)
+
+diff --git a/config-overrides.js b/config-overrides.js
+index be2d600..8cf381e 100644
+--- a/config-overrides.js
++++ b/config-overrides.js
+@@ -9,6 +9,7 @@ module.exports = function override(config) {
+ 		https: require.resolve("https-browserify"),
+ 		os: require.resolve("os-browserify"),
+ 		url: require.resolve("url"),
++		zlib: require.resolve("browserify-zlib"),
+ 	});
+ 	config.resolve.fallback = fallback;
+ 	config.plugins = (config.plugins || []).concat([
+diff --git a/package-lock.json b/package-lock.json
+index c2743b1..e4057af 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -13,6 +13,7 @@
+ 				"@testing-library/jest-dom": "^5.16.5",
+ 				"@testing-library/react": "^13.4.0",
+ 				"@testing-library/user-event": "^13.5.0",
++				"browserify-zlib": "^0.2.0",
+ 				"ethers": "^5.7.1",
+ 				"path": "^0.12.7",
+ 				"path-browserify": "^1.0.1",
+@@ -23,8 +24,7 @@
+ 				"react-scripts": "^5.0.1",
+ 				"react-scroll": "^1.8.7",
+ 				"wagmi": "^0.6.6",
+-				"web-vitals": "^2.1.4",
+-				"zlib": "^1.0.5"
++				"web-vitals": "^2.1.4"
+ 			},
+ 			"devDependencies": {
+ 				"assert": "^2.0.0",
+@@ -9028,6 +9028,14 @@
+ 				"safe-buffer": "^5.2.0"
+ 			}
+ 		},
++		"node_modules/browserify-zlib": {
++			"version": "0.2.0",
++			"resolved": "https://registry.npmjs.org/browserify-zlib/-/browserify-zlib-0.2.0.tgz",
++			"integrity": "sha512-Z942RysHXmJrhqk88FmKBVq/v5tqmSkDz7p54G/MGyjMnCFFnC79XWNbg+Vta8W6Wb2qtSZTSxIGkJrRpCFEiA==",
++			"dependencies": {
++				"pako": "~1.0.5"
++			}
++		},
+ 		"node_modules/browserslist": {
+ 			"version": "4.21.3",
+ 			"resolved": "https://registry.npmjs.org/browserslist/-/browserslist-4.21.3.tgz",
+@@ -19323,6 +19331,11 @@
+ 				"node": ">=6"
+ 			}
+ 		},
++		"node_modules/pako": {
++			"version": "1.0.11",
++			"resolved": "https://registry.npmjs.org/pako/-/pako-1.0.11.tgz",
++			"integrity": "sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw=="
++		},
+ 		"node_modules/param-case": {
+ 			"version": "3.0.4",
+ 			"resolved": "https://registry.npmjs.org/param-case/-/param-case-3.0.4.tgz",
+@@ -25605,15 +25618,6 @@
+ 				"url": "https://github.com/sponsors/sindresorhus"
+ 			}
+ 		},
+-		"node_modules/zlib": {
+-			"version": "1.0.5",
+-			"resolved": "https://registry.npmjs.org/zlib/-/zlib-1.0.5.tgz",
+-			"integrity": "sha512-40fpE2II+Cd3k8HWTWONfeKE2jL+P42iWJ1zzps5W51qcTsOUKM5Q5m2PFb0CLxlmFAaUuUdJGc3OfZy947v0w==",
+-			"hasInstallScript": true,
+-			"engines": {
+-				"node": ">=0.2.0"
+-			}
+-		},
+ 		"node_modules/zustand": {
+ 			"version": "4.1.1",
+ 			"resolved": "https://registry.npmjs.org/zustand/-/zustand-4.1.1.tgz",
+@@ -32259,6 +32263,14 @@
+ 				"safe-buffer": "^5.2.0"
+ 			}
+ 		},
++		"browserify-zlib": {
++			"version": "0.2.0",
++			"resolved": "https://registry.npmjs.org/browserify-zlib/-/browserify-zlib-0.2.0.tgz",
++			"integrity": "sha512-Z942RysHXmJrhqk88FmKBVq/v5tqmSkDz7p54G/MGyjMnCFFnC79XWNbg+Vta8W6Wb2qtSZTSxIGkJrRpCFEiA==",
++			"requires": {
++				"pako": "~1.0.5"
++			}
++		},
+ 		"browserslist": {
+ 			"version": "4.21.3",
+ 			"resolved": "https://registry.npmjs.org/browserslist/-/browserslist-4.21.3.tgz",
+@@ -40266,6 +40278,11 @@
+ 			"resolved": "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz",
+ 			"integrity": "sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ=="
+ 		},
++		"pako": {
++			"version": "1.0.11",
++			"resolved": "https://registry.npmjs.org/pako/-/pako-1.0.11.tgz",
++			"integrity": "sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw=="
++		},
+ 		"param-case": {
+ 			"version": "3.0.4",
+ 			"resolved": "https://registry.npmjs.org/param-case/-/param-case-3.0.4.tgz",
+@@ -44828,11 +44845,6 @@
+ 			"resolved": "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz",
+ 			"integrity": "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q=="
+ 		},
+-		"zlib": {
+-			"version": "1.0.5",
+-			"resolved": "https://registry.npmjs.org/zlib/-/zlib-1.0.5.tgz",
+-			"integrity": "sha512-40fpE2II+Cd3k8HWTWONfeKE2jL+P42iWJ1zzps5W51qcTsOUKM5Q5m2PFb0CLxlmFAaUuUdJGc3OfZy947v0w=="
+-		},
+ 		"zustand": {
+ 			"version": "4.1.1",
+ 			"resolved": "https://registry.npmjs.org/zustand/-/zustand-4.1.1.tgz",
+diff --git a/package.json b/package.json
+index 4476310..ee2d9e7 100644
+--- a/package.json
++++ b/package.json
+@@ -8,6 +8,7 @@
+ 		"@testing-library/jest-dom": "^5.16.5",
+ 		"@testing-library/react": "^13.4.0",
+ 		"@testing-library/user-event": "^13.5.0",
++		"browserify-zlib": "^0.2.0",
+ 		"ethers": "^5.7.1",
+ 		"path": "^0.12.7",
+ 		"path-browserify": "^1.0.1",
+@@ -18,8 +19,7 @@
+ 		"react-scripts": "^5.0.1",
+ 		"react-scroll": "^1.8.7",
+ 		"wagmi": "^0.6.6",
+-		"web-vitals": "^2.1.4",
+-		"zlib": "^1.0.5"
++		"web-vitals": "^2.1.4"
+ 	},
+ 	"scripts": {
+ 		"start": "react-app-rewired start",
+-- 
+2.30.2
+

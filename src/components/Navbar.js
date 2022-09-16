@@ -33,11 +33,11 @@ const Navbar = () => {
 				<li>
 					<Link
 						className="hover:border-background border-2 px-4 py-2"
-						to="wallet-balance"
+						to="wallet"
 						smooth={true}
 						duration={500}
 					>
-						wallet balance
+						wallet
 					</Link>
 				</li>
 				<li>
@@ -64,7 +64,7 @@ const Navbar = () => {
 				</li>
 			</ul>
 			<div className="pr-5">
-				<ConnectButton />
+				<ConnectButton showBalance={false} />
 			</div>
 
 			{/* hamburger */}
@@ -85,8 +85,8 @@ const Navbar = () => {
 					</Link>
 				</li>
 				<li className="py-6 text-4xl">
-					<Link onClick={handleClick} to="wallet-balance" smooth={true} duration={500}>
-						wallet balance
+					<Link onClick={handleClick} to="wallet" smooth={true} duration={500}>
+						wallet
 					</Link>
 				</li>
 				<li className="py-6 text-4xl">

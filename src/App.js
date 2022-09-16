@@ -1,7 +1,7 @@
 import "./index.css";
 import Navbar from "./components/Navbar";
 import AboutPage from "./pages/AboutPage";
-import BalancePage from "./pages/BalancePage";
+import WalletPage from "./pages/WalletPage";
 import BatchUploadPage from "./pages/BatchUploadPage";
 import CheckPricePage from "./pages/CheckPricePage";
 
@@ -34,7 +34,7 @@ function App() {
 				<div>
 					<Navbar />
 					<AboutPage />
-					<BalancePage />
+					<WalletPage />
 					<BatchUploadPage />
 					<CheckPricePage />
 				</div>

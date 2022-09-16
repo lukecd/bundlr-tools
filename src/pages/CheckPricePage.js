@@ -1,4 +1,5 @@
 import React from "react";
+import CheckPrice from "../components/CheckPrice";
 
 const CheckPricePage = () => {
 	return (
@@ -7,19 +8,23 @@ const CheckPricePage = () => {
 			className="w-full h-full md:h-screen overflow-visible bg-background text-text"
 		>
 			<div className="flex flex-col justify-center items-start w-full h-full">
-				<div className="pl-20 pr-20w-full grid grid-cols-2 gap-8">
-					<div className="text-left pb-8 pl-4">
+				<div className="pl-20 pr-20">
+					<div className="text-left pb-8">
 						<p className="text-4xl font-bold inline border-b-4 border-primary">
-							check price ...
+							check upload price ...
 						</p>
 					</div>
 				</div>
 
-				<div className="px-5 w-full">
+				<div className="pl-20 pr-20">
 					<div>
-						<p className="pl-20 pr-20 leading-7"></p>
-						<p className="ml-10 mt-5 pl-20 pr-20 leading-7"></p>
+						<CheckPrice />
 					</div>
+					<p className="pl-1 text-sm">Check the current price to upload files.</p>
+					<p className="pl-1 text-sm">
+						You can restrict the types of files allowed to be uploaded. Currently image and text
+						only.
+					</p>
 				</div>
 			</div>
 		</div>
