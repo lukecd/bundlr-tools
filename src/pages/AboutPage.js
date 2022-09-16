@@ -30,6 +30,15 @@ const AboutPage = () => {
 									</a>
 								</li>
 								<li>
+									<a
+										href="https://github.com/lukecd/bundlr-tools"
+										target="_blank"
+										className="underline"
+									>
+										Check out the sourecode (it's opensource, MIT license).
+									</a>
+								</li>
+								<li>
 									<a href="https://luke.gallery" target="_blank" className="underline">
 										See more of my work.
 									</a>
