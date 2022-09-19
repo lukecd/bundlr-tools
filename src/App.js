@@ -35,8 +35,8 @@ function App() {
 					<Navbar />
 					<AboutPage />
 					<WalletPage />
-					<BatchUploadPage />
 					<CheckPricePage />
+					<BatchUploadPage />
 				</div>
 			</RainbowKitProvider>
 		</WagmiConfig>

@@ -5,18 +5,28 @@ import { getDefaultProvider } from "ethers";
 import { useBalance, useAccount, useContract, useContractEvent, useProvider, useSigner } from "wagmi";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import erc20ABI from "../assets/abi/ERC-20.abi.json";
+import { BigNumber, ethers } from "ethers";
 
 const FundWallet = (props) => {
-	// const [bundlerHttpAddress, setBundlerHttpAddress] = useState("https://node1.bundlr.network");
-	const [bundlerHttpAddress, setBundlerHttpAddress] = useState("https://devnet.bundlr.network");
+	const [bundlerAddress, setBundlerAddresses] = useState("https://node1.bundlr.network");
 	const { data: signer, isError: isSignerError, isLoading: isSignerLoading } = useSigner();
 
 	const [rpcUrl, setRpcUrl] = useState();
 	const [contractAddress, setContractAddress] = useState();
 	const [ethPrice, setEthPrice] = useState(0);
 	const [maticPrice, setMaticPrice] = useState(0);
-
 	const provider = useProvider();
+
+	const ethProvider = ethers.getDefaultProvider();
+	const goerliProvider = ethers.getDefaultProvider("goerli");
+	const maticProvider = ethers.getDefaultProvider("matic");
+	const mumbaiProvider = ethers.getDefaultProvider("wss://rpc-mumbai.matic.today/");
+
+	const [ethBalance, setEthBalance] = useState(0);
+	const [gorBalance, setGorBalance] = useState(0);
+	const [maticBalance, setMaticBalance] = useState(0);
+	const [mumbaiBalance, setMumbaiBalance] = useState(0);
 
 	const currencies = [
 		{ symbol: "ETH", name: "ethereum", address: "" },
@@ -25,10 +35,39 @@ const FundWallet = (props) => {
 	const [selected, setSelected] = useState(currencies[1]);
 
 	useEffect(() => {
+		if (props.useDevnet == "true") {
+			setBundlerAddresses("https://devnet.bundlr.network");
+		}
+
+		// try getting matic and eth balances for the user
 		try {
 			if (signer) {
+				const getBalances = async () => {
+					console.log("gettinb balances");
+					let ethBalance = await ethProvider.getBalance(signer._address);
+					ethBalance = ethers.utils.formatEther(ethBalance);
+					setEthBalance(ethBalance);
+					console.log("ethBalance=", ethBalance.toString());
+
+					let gorBalance = await goerliProvider.getBalance(signer._address);
+					gorBalance = ethers.utils.formatEther(gorBalance);
+					setGorBalance(gorBalance);
+					console.log("gorBalance=", gorBalance.toString());
+
+					let maticBalance = await maticProvider.getBalance(signer._address);
+					maticBalance = ethers.utils.formatEther(maticBalance);
+					setMaticBalance(maticBalance);
+					console.log("maticBalance=", maticBalance.toString());
+
+					let mumbaiBalance = await mumbaiProvider.getBalance(signer._address);
+					mumbaiBalance = ethers.utils.formatEther(mumbaiBalance);
+					setMumbaiBalance(mumbaiBalance);
+					console.log("mumbaiBalance=", mumbaiBalance.toString());
+				};
+				getBalances();
+				console.log("signer=", signer._address);
 			}
-			const bundlr = new WebBundlr(bundlerHttpAddress, selected.name, getDefaultProvider());
+			const bundlr = new WebBundlr(bundlerAddress, selected.name, getDefaultProvider());
 		} catch (e) {
 			console.log(e);
 		}

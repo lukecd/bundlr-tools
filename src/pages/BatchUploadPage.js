@@ -7,9 +7,9 @@ const BatchUploadPage = () => {
 			className="w-full h-full md:h-screen overflow-visible bg-background text-text"
 		>
 			<div className="flex flex-col justify-center items-start w-full h-full">
-				<div className="pl-20 pr-20w-full grid grid-cols-2 gap-8">
+				<div className="md:pl-20 md:pr-20 w-full">
 					<div className="text-left pb-8 pl-4">
-						<p className="text-4xl font-bold inline border-b-4 border-primary">
+						<p className="text-2xl md:text-4xl font-bold inline border-b-4 border-primary">
 							batch upload ...
 						</p>
 					</div>

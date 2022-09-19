@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { WebBundlr } from "@bundlr-network/client";
 import { getDefaultProvider } from "ethers";
 
-const CheckPrice = () => {
+const CheckPrice = (props) => {
 	const [files, setFile] = useState([]);
 	const [message, setMessage] = useState();
 	const [ethPrice, setEthPrice] = useState(0);
@@ -12,10 +12,13 @@ const CheckPrice = () => {
 		"https://node1.bundlr.network",
 		"https://node2.bundlr.network",
 	]);
-	// const [bundlerHttpAddress, setBundlerHttpAddress] = useState("https://devnet.bundlr.network");
 
 	useEffect(() => {
 		try {
+			if (props.useDevnet) {
+				setBundlerAddresses(["https://devnet.bundlr.network"]);
+			}
+
 			// get ETH and MATIC prices using free 0x.org api.
 			// feel free to swtich to any other data provider
 			try {
@@ -45,15 +48,12 @@ const CheckPrice = () => {
 	const getPriceForFile = async (file) => {
 		let prices = [];
 		for (let i = 0; i < bundlerAddresses.length; i++) {
-			console.log("getting price for file=", file);
 			// create our bundlr object
 			const bundlr = new WebBundlr(bundlerAddresses[i], "matic", getDefaultProvider());
-			console.log("getting price for bundlr=", bundlr);
 
 			let cost = await bundlr.getPrice(file.size);
 			cost = bundlr.utils.unitConverter(cost).toString();
 			cost *= maticPrice;
-			console.log("getting price for cost=", cost.toString());
 			prices.push(cost.toString());
 		}
 		return Math.min(...prices);
@@ -65,7 +65,6 @@ const CheckPrice = () => {
 
 		for (let i = 0; i < file.length; i++) {
 			const fileType = file[i]["type"];
-			console.log("file[i]=", file[i]);
 			file[i]["price"] = await getPriceForFile(file[i]);
 			const validImageTypes = ["image/gif", "image/jpeg", "image/png", "text/plain"];
 			if (validImageTypes.includes(fileType)) {
