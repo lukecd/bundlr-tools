@@ -9,6 +9,7 @@ module.exports = {
 			secondary: "#5cdb95",
 			tertiary: "#8ee4af",
 			text: "#ffffff",
+			errorText: "#FF0000",
 			// ...
 		},
 	},

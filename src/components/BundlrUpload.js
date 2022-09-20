@@ -2,8 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { WebBundlr } from "@bundlr-network/client";
 import { getDefaultProvider } from "ethers";
-
+import CircleLoader from "react-spinners/CircleLoader";
 const BundlrUpload = (props) => {
+	const [isLoading, setIsLoading] = useState(false);
 	const [files, setFile] = useState([]);
 	const [message, setMessage] = useState();
 	const [ethPrice, setEthPrice] = useState(0);
@@ -92,6 +93,7 @@ const BundlrUpload = (props) => {
 	};
 
 	const upload = async () => {
+		setIsLoading(!isLoading);
 		console.log("uploading");
 	};
 
@@ -123,19 +125,22 @@ const BundlrUpload = (props) => {
 					{files.map((file, key) => {
 						return (
 							<div key={key} className="flex flex-row overflow-hidden relative">
-								<img
-									className="h-20 w-20 rounded-md"
-									src={URL.createObjectURL(file)}
-									alt="preview"
-									onClick={() => {
-										removeImage(file.name);
-									}}
-								/>
+								{!isLoading && (
+									<img
+										className="h-20 w-20 rounded-md"
+										src={URL.createObjectURL(file)}
+										alt="preview"
+										onClick={() => {
+											removeImage(file.name);
+										}}
+									/>
+								)}
+								{isLoading && <CircleLoader size={80} color="#FFFFFF" />}
 								<div className="flex flex-col">
 									<span className="pl-2 text-sm">{file.name}</span>
 									<span className="pl-2 text-sm">{file.size} bytes</span>
 									<span className="pl-2 text-sm">${file.price}</span>
-									<span className="pl-2 text-sm">${file.bundlrURL}</span>
+									<span className="pl-2 text-sm">{file.bundlrURL}</span>
 								</div>
 							</div>
 						);
@@ -144,12 +149,24 @@ const BundlrUpload = (props) => {
 			</div>
 			{props.showUpload && (
 				<div className="flex flex-row justify-end mb-1 mr-1">
-					<button
-						class="bg-secondary hover:text text-text py-1 px-5 rounded drop-shadow-lg"
-						onClick={upload}
-					>
-						upload
-					</button>
+					{files.length == 0 && (
+						<button
+							type="button"
+							className="bg-secondary hover:text text-text py-1 px-5 rounded drop-shadow-lg disabled:opacity-100"
+							disabled
+						>
+							Upload
+						</button>
+					)}
+					{files.length > 0 && (
+						<button
+							type="button"
+							className="bg-secondary hover:text text-text py-1 px-5 rounded drop-shadow-lg"
+							onClick={upload}
+						>
+							Upload
+						</button>
+					)}
 				</div>
 			)}
 		</div>

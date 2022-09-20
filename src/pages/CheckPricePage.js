@@ -26,7 +26,7 @@ const CheckPricePage = () => {
 						only.
 						<blockquote className="mt-1">
 							<pre>
-								<code>{"<BundlrUpload \n\tmaxPreview=1 \n\tshowUpload=false />"}</code>
+								<code>{"<BundlrUpload \n\tmaxPreview=2 \n\tshowUpload=false />"}</code>
 							</pre>
 						</blockquote>
 					</p>

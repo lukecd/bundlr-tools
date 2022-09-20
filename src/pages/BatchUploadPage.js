@@ -7,7 +7,7 @@ const BatchUploadPage = () => {
 			name="batch-upload"
 			className="w-full h-full md:h-screen overflow-visible bg-background text-text"
 		>
-			<div className="flex flex-col justify-center items-start w-full h-full">
+			<div className="flex flex-col justify-center items-start  h-full">
 				<div className="md:pl-20 md:pr-20 w-full">
 					<div className="text-left pb-8 pl-4">
 						<p className="text-2xl md:text-4xl font-bold inline border-b-4 border-primary">
@@ -17,12 +17,14 @@ const BatchUploadPage = () => {
 				</div>
 
 				<div className="pl-20 pr-20">
-					<div>
+					<div className="">
 						<BundlrUpload maxPreview={1} showUpload={true} />
 					</div>
 					<p className="pl-1 pt-3 text-sm">Upload files to Bundlr.</p>
 					<p className="pl-1 text-sm">
-						This component is a wrapper around BundlrCheckPrice that adds the option to upload.
+						This component is the same as used for checking upload price. By setting
+						"showUpload" <br />
+						to true an upload button is added.
 						<blockquote className="mt-1">
 							<pre>
 								<code>{"<BundlrUpload \n\tmaxPreview=1 \n\tshowUpload=true />"}</code>

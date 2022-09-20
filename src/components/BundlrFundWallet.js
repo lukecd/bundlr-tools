@@ -9,7 +9,7 @@ import erc20ABI from "../assets/abi/ERC-20.abi.json";
 import { BigNumber, ethers } from "ethers";
 
 const BundlrFundWallet = (props) => {
-	const [bundlerAddress, setBundlerAddresses] = useState("https://node1.bundlr.network");
+	//const [bundlerAddress, setBundlerAddresses] = useState("https://node1.bundlr.network");
 	const { data: signer, isError: isSignerError, isLoading: isSignerLoading } = useSigner();
 
 	const [rpcUrl, setRpcUrl] = useState();
@@ -38,11 +38,6 @@ const BundlrFundWallet = (props) => {
 	const [selected, setSelected] = useState(currencies[1]);
 
 	useEffect(() => {
-		console.log("selected ", selected.symbol);
-		if (props.useDevnet == "true") {
-			setBundlerAddresses("https://devnet.bundlr.network");
-		}
-
 		// try getting matic and eth balances for the user
 		try {
 			if (signer) {
@@ -76,36 +71,35 @@ const BundlrFundWallet = (props) => {
 
 	const fund = async () => {
 		// connect to BUNDLR
-		console.log(`conecting to ${bundlerAddress} network ${selected.name}`);
+		let bundlerAddress = "";
+		if (props.useDevnet) {
+			bundlerAddress = "https://devnet.bundlr.network";
+		} else {
+			bundlerAddress = "https://node2.bundlr.network";
+		}
+
+		console.log(`connecting to ${bundlerAddress} network ${selected.name}`);
 		const bundlr = new WebBundlr(bundlerAddress, selected.name, getDefaultProvider());
 
-		// test
-		console.log("starting test");
-		let fundAmountParsed = ethers.utils.parseEther(fundAmount);
-
-		// parse decimal input into atomic units (from the Bundlr docs)
-		// const fundAmountParsed = BigNumber.from(fundAmount).multipliedBy(bundlr.currencyConfig.base[1]);
-		//const fundAmountParsed = ethers.utils.parseEther(fundAmount);
+		//	const fundAmountParsed = BigNumber.from(fundAmount).multipliedBy(bundlr.currencyConfig.base[1]);
+		// const fundAmountParsed = ethers.utils.parseEther(fundAmount);
+		const fundAmountParsed = fundAmount * bundlr.currencyConfig.base[1];
 
 		console.log("fund called fundAmountParsed=", fundAmountParsed.toString());
-		// if (fundAmountParsed <= 0) {
-		// 	setMessage("Must fund > 0");
-		// 	return;
-		// }
 
 		await bundlr
-			.fund(fundAmountParsed)
+			.fund(fundAmountParsed.toString())
 			.then((res) => {
-				setMessage("funded");
+				setMessage("Wallet Funded");
 			})
 			.catch((e) => {
 				console.log(e);
-				setMessage("error on fund ", e.message);
+				setMessage("Error While Funding ", e.message);
 			});
 	};
 
 	return (
-		<div className="flex flex-col md:flex-row items-center px-2 py-2 border-2 border-primary rounded-lg drop-shadow-lg">
+		<div className="flex flex-col items-start px-2 py-2 border-2 border-primary rounded-lg drop-shadow-lg">
 			<div className="flex flex-row">
 				<div className="flex flex-col">
 					<div>
@@ -190,7 +184,9 @@ const BundlrFundWallet = (props) => {
 					</button>
 				</div>
 			</div>
-			<div className="text-sm flex flex-row justify-start">{message}</div>
+			<div className="text-sm flex flex-row justify-start">
+				<span className="text-errorText">{message}</span>
+			</div>
 		</div>
 	);
 };
