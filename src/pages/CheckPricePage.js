@@ -1,5 +1,5 @@
 import React from "react";
-import CheckPrice from "../components/CheckPrice";
+import BundlrUpload from "../components/BundlrUpload";
 
 const CheckPricePage = () => {
 	return (
@@ -18,12 +18,17 @@ const CheckPricePage = () => {
 
 				<div className="pl-20 pr-20">
 					<div>
-						<CheckPrice />
+						<BundlrUpload maxPreview={2} showUpload={false} />
 					</div>
-					<p className="pl-1 text-sm">Check the current price to upload files.</p>
+					<p className="pl-1 pt-3 text-sm">Check the current price to upload files.</p>
 					<p className="pl-1 text-sm">
 						You can restrict the types of files allowed to be uploaded. Currently image and text
 						only.
+						<blockquote className="mt-1">
+							<pre>
+								<code>{"<BundlrUpload \n\tmaxPreview=1 \n\tshowUpload=false />"}</code>
+							</pre>
+						</blockquote>
 					</p>
 				</div>
 			</div>

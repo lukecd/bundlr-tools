@@ -6,7 +6,7 @@ import React from "react";
  */
 const AboutPage = () => {
 	return (
-		<div name="about" className="w-full md:h-screen bg-background text-text">
+		<div name="about" className="w-full h-screen bg-background text-text">
 			<div className="flex flex-col justify-center items-start w-full h-full">
 				<div className="md:pl-20 md:pr-20 w-full">
 					<div className="text-left pb-8 pl-4">
@@ -24,7 +24,7 @@ const AboutPage = () => {
 							It's been a crazy monsoon season this year in Bangkok, so I gave it a verdant
 							color theme.
 						</p>
-						<p className="ml-3 mr-3 md:ml-10 md:mt-5 md:pl-20 md:pr-20 leading-7">
+						<p className="ml-10 pr-10 md:ml-10 md:mt-5 md:pl-20 md:pr-20 leading-7">
 							<ol className="list-decimal list-outside">
 								<li className="text-4xl">
 									<span className="text-base">

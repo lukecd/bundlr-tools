@@ -5,7 +5,7 @@ import { getDefaultProvider } from "ethers";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
-const WalletBalance = (props) => {
+const BundlrWalletBalance = (props) => {
 	const [loadedBalance, setLoadedBalance] = useState();
 	const [loadedBalanceDecimal, setLoadedBalanceDecimal] = useState();
 	const [loadedBalanceUSD, setLoadedBalanceUSD] = useState();
@@ -91,9 +91,12 @@ const WalletBalance = (props) => {
 	};
 
 	return (
-		<div className="flex flex-row items-center px-2 py-2 border-2 border-primary rounded-lg drop-shadow-lg">
-			{props.showUSDBalance == "true" && <div className="pr-5">${loadedBalanceUSD}</div>}
-			{props.showCryptoBalance == "true" && (
+		<div className="flex flex-col md:flex-row items-center px-2 py-2 border-2 border-primary rounded-lg drop-shadow-lg">
+			{!isNaN(loadedBalanceUSD) && (
+				<>{props.showUSDBalance && <div className="pr-5">${loadedBalanceUSD}</div>}</>
+			)}
+
+			{props.showCryptoBalance && (
 				<>
 					<div className="">{loadedBalanceDecimal}</div>
 					<div className="pl-3 w-48">
@@ -157,4 +160,4 @@ const WalletBalance = (props) => {
 	);
 };
 
-export default WalletBalance;
+export default BundlrWalletBalance;

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { WebBundlr } from "@bundlr-network/client";
 import { getDefaultProvider } from "ethers";
 
-const CheckPrice = (props) => {
+const BundlrUpload = (props) => {
 	const [files, setFile] = useState([]);
 	const [message, setMessage] = useState();
 	const [ethPrice, setEthPrice] = useState(0);
@@ -61,17 +61,29 @@ const CheckPrice = (props) => {
 
 	const handleFile = async (e) => {
 		setMessage("");
-		let file = e.target.files;
+		let newFiles = e.target.files;
 
-		for (let i = 0; i < file.length; i++) {
-			const fileType = file[i]["type"];
-			file[i]["price"] = await getPriceForFile(file[i]);
+		for (let i = 0; i < newFiles.length; i++) {
+			const fileType = newFiles[i]["type"];
+			newFiles[i]["price"] = await getPriceForFile(newFiles[i]);
 			const validImageTypes = ["image/gif", "image/jpeg", "image/png", "text/plain"];
 			if (validImageTypes.includes(fileType)) {
-				setFile([...files, file[i]]);
+				if (files.length >= props.maxPreview) {
+					files.shift();
+					setFile([...files, newFiles[i]]);
+				} else {
+					setFile([...files, newFiles[i]]);
+				}
 			} else {
-				setMessage("only images and text accepted");
+				setMessage("Please upload either an image or text file.");
 			}
+		}
+
+		console.log("files.length=", files.length);
+		console.log("props.maxPreview=", props.maxPreview);
+		while (files.length >= props.maxPreview) {
+			console.log("shifting array");
+			setFile([files.pop()]);
 		}
 	};
 
@@ -79,9 +91,13 @@ const CheckPrice = (props) => {
 		setFile(files.filter((x) => x.name !== i));
 	};
 
+	const upload = async () => {
+		console.log("uploading");
+	};
+
 	return (
-		<div>
-			<div className="flex flex-row justify-start items-start px-2 py-2 border-2 border-primary rounded-lg drop-shadow-lg bg-primary">
+		<div className="flex flex-col bg-primary  drop-shadow-lg">
+			<div className="flex flex-row justify-start items-start px-2 py-2  bg-primary">
 				<div className="rounded-md">
 					<span className="flex justify-center items-center text-sm mb-1 text-text ">
 						{message}
@@ -110,6 +126,7 @@ const CheckPrice = (props) => {
 								<img
 									className="h-20 w-20 rounded-md"
 									src={URL.createObjectURL(file)}
+									alt="preview"
 									onClick={() => {
 										removeImage(file.name);
 									}}
@@ -118,14 +135,25 @@ const CheckPrice = (props) => {
 									<span className="pl-2 text-sm">{file.name}</span>
 									<span className="pl-2 text-sm">{file.size} bytes</span>
 									<span className="pl-2 text-sm">${file.price}</span>
+									<span className="pl-2 text-sm">${file.bundlrURL}</span>
 								</div>
 							</div>
 						);
 					})}
 				</div>
 			</div>
+			{props.showUpload && (
+				<div className="flex flex-row justify-end mb-1 mr-1">
+					<button
+						class="bg-secondary hover:text text-text py-1 px-5 rounded drop-shadow-lg"
+						onClick={upload}
+					>
+						upload
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };
 
-export default CheckPrice;
+export default BundlrUpload;

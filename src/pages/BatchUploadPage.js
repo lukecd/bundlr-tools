@@ -1,4 +1,5 @@
 import React from "react";
+import BundlrUpload from "../components/BundlrUpload";
 
 const BatchUploadPage = () => {
 	return (
@@ -10,16 +11,24 @@ const BatchUploadPage = () => {
 				<div className="md:pl-20 md:pr-20 w-full">
 					<div className="text-left pb-8 pl-4">
 						<p className="text-2xl md:text-4xl font-bold inline border-b-4 border-primary">
-							batch upload ...
+							upload ...
 						</p>
 					</div>
 				</div>
 
-				<div className="px-5 w-full">
+				<div className="pl-20 pr-20">
 					<div>
-						<p className="pl-20 pr-20 leading-7"></p>
-						<p className="ml-10 mt-5 pl-20 pr-20 leading-7"></p>
+						<BundlrUpload maxPreview={1} showUpload={true} />
 					</div>
+					<p className="pl-1 pt-3 text-sm">Upload files to Bundlr.</p>
+					<p className="pl-1 text-sm">
+						This component is a wrapper around BundlrCheckPrice that adds the option to upload.
+						<blockquote className="mt-1">
+							<pre>
+								<code>{"<BundlrUpload \n\tmaxPreview=1 \n\tshowUpload=true />"}</code>
+							</pre>
+						</blockquote>
+					</p>
 				</div>
 			</div>
 		</div>
