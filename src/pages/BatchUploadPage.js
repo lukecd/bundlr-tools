@@ -9,7 +9,7 @@ const BatchUploadPage = () => {
 		>
 			<div className="flex flex-col justify-center items-start  h-full">
 				<div className="md:pl-20 md:pr-20 w-full">
-					<div className="text-left pb-8 pl-4">
+					<div className="text-left pb-8">
 						<p className="text-2xl md:text-4xl font-bold inline border-b-4 border-primary">
 							upload ...
 						</p>
@@ -18,7 +18,7 @@ const BatchUploadPage = () => {
 
 				<div className="pl-20 pr-20">
 					<div className="">
-						<BundlrUpload maxPreview={1} showUpload={true} />
+						<BundlrUpload maxPreview={1} showUpload={true} useDevnet={true} />
 					</div>
 					<p className="pl-1 pt-3 text-sm">Upload files to Bundlr.</p>
 					<p className="pl-1 text-sm">
@@ -27,7 +27,11 @@ const BatchUploadPage = () => {
 						to true an upload button is added.
 						<blockquote className="mt-1">
 							<pre>
-								<code>{"<BundlrUpload \n\tmaxPreview=1 \n\tshowUpload=true />"}</code>
+								<code>
+									{
+										"<BundlrUpload \n\tmaxPreview=1 \n\tshowUpload=true \n\tuseDevnet=true/>"
+									}
+								</code>
 							</pre>
 						</blockquote>
 					</p>

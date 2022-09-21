@@ -4,6 +4,9 @@ import { WebBundlr } from "@bundlr-network/client";
 import { getDefaultProvider } from "ethers";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { ethers } from "ethers";
+import BigNumber from "bignumber.js";
+import { useProvider, useSigner } from "wagmi";
 
 const BundlrWalletBalance = (props) => {
 	const [loadedBalance, setLoadedBalance] = useState();
@@ -16,6 +19,7 @@ const BundlrWalletBalance = (props) => {
 	const [contractAddress, setContractAddress] = useState();
 	const [ethPrice, setEthPrice] = useState(0);
 	const [maticPrice, setMaticPrice] = useState(0);
+	const { data: signer, isError: isSignerError, isLoading: isSignerLoading } = useSigner();
 
 	const currencies = [
 		{ symbol: "ETH", name: "ethereum" },
@@ -24,11 +28,40 @@ const BundlrWalletBalance = (props) => {
 	const [selected, setSelected] = useState(currencies[1]);
 
 	useEffect(() => {
+		if (!signer) return;
+
+		// create our bundlr object
+		const newProvider = new ethers.providers.Web3Provider(window.ethereum);
+		const bundlr = new WebBundlr(bundlerAddress, selected.name, newProvider);
+
+		const getLoadedBalance = async () => {
+			const curBalance = await bundlr.getBalance(signer._address);
+
+			setLoadedBalance(curBalance.toString());
+			setLoadedBalanceDecimal(bundlr.utils.unitConverter(curBalance).toFixed(7, 2).toString());
+			if (selected.name == "matic") {
+				setLoadedBalanceUSD(
+					bundlr.utils
+						.unitConverter(curBalance / maticPrice)
+						.toFixed(7, 2)
+						.toString(),
+				);
+			} else if (selected.name == "etherem") {
+				setLoadedBalanceUSD(
+					bundlr.utils
+						.unitConverter(curBalance / ethPrice)
+						.toFixed(7, 2)
+						.toString(),
+				);
+			}
+		};
+		getLoadedBalance();
+	}, [signer, ethPrice, maticPrice]);
+
+	useEffect(() => {
 		if (props.useDevnet) {
-			console.log("setting devenet");
 			setBundlerAddresses("https://devnet.bundlr.network");
 		}
-		console.log("selected=", selected);
 
 		try {
 			// get ETH and MATIC prices using free 0x.org api.
@@ -53,38 +86,10 @@ const BundlrWalletBalance = (props) => {
 			} catch (e) {
 				console.log(e);
 			}
-
-			// create our bundlr object
-			const bundlr = new WebBundlr(bundlerAddress, selected.name, getDefaultProvider());
-
-			const getLoadedBalance = async () => {
-				console.log("getting balance currency=", selected.name);
-				const curBalance = await bundlr.getLoadedBalance();
-				setLoadedBalance(curBalance.toString());
-				setLoadedBalanceDecimal(bundlr.utils.unitConverter(curBalance).toFixed(7, 2).toString());
-				if (selected.name == "matic") {
-					console.log("setting balance usd matic mPrice=", maticPrice);
-					setLoadedBalanceUSD(
-						bundlr.utils
-							.unitConverter(curBalance / maticPrice)
-							.toFixed(7, 2)
-							.toString(),
-					);
-				} else if (selected.name == "etherem") {
-					console.log("setting balance usd matic mPrice=", ethPrice);
-					setLoadedBalanceUSD(
-						bundlr.utils
-							.unitConverter(curBalance / ethPrice)
-							.toFixed(7, 2)
-							.toString(),
-					);
-				}
-			};
-			getLoadedBalance();
 		} catch (e) {
 			console.log(e);
 		}
-	}, [selected, ethPrice, maticPrice]);
+	}, []);
 
 	const classNames = (...classes) => {
 		return classes.filter(Boolean).join(" ");

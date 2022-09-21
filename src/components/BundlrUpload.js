@@ -1,8 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { WebBundlr } from "@bundlr-network/client";
+import { ethers } from "ethers";
 import { getDefaultProvider } from "ethers";
 import CircleLoader from "react-spinners/CircleLoader";
+import fileReaderStream from "filereader-stream";
+
 const BundlrUpload = (props) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [files, setFile] = useState([]);
@@ -80,10 +83,7 @@ const BundlrUpload = (props) => {
 			}
 		}
 
-		console.log("files.length=", files.length);
-		console.log("props.maxPreview=", props.maxPreview);
 		while (files.length >= props.maxPreview) {
-			console.log("shifting array");
 			setFile([files.pop()]);
 		}
 	};
@@ -93,82 +93,115 @@ const BundlrUpload = (props) => {
 	};
 
 	const upload = async () => {
-		setIsLoading(!isLoading);
-		console.log("uploading");
+		setIsLoading(true);
+		console.log("uploading to-->", bundlerAddresses[0]);
+		// for now set to 0'th address, but still need to check which one is cheaper
+		const newProvider = new ethers.providers.Web3Provider(window.ethereum);
+		const bundlr = new WebBundlr(bundlerAddresses[0], "matic", newProvider);
+		await bundlr.ready();
+
+		const uploader = bundlr.uploader.chunkedUploader;
+		uploader.setBatchSize(2);
+		uploader.setChunkSize(2_000_000);
+		uploader.on("chunkUpload", (e) => {});
+		console.log("uploader=", uploader);
+		for (let i = 0; i < files.length; i++) {
+			const imgStream = fileReaderStream(files[i]);
+
+			console.log("file data=", imgStream);
+			await uploader
+				.uploadData(imgStream, {
+					tags: [{ name: "Content-Type", value: files[i].type }],
+				})
+				.then((res) => {
+					setIsLoading(false);
+					files[i].bundlrURL = `https://arweave.net/${res.data.id}`;
+					setMessage("Upload success");
+				})
+				.catch((e) => {
+					setIsLoading(false);
+					setMessage("Upload error ", e.message);
+					console.log("error on upload, ", e);
+				});
+		}
 	};
 
 	return (
 		<div className="flex flex-col bg-primary  drop-shadow-lg">
-			<div className="flex flex-row justify-start items-start px-2 py-2  bg-primary">
-				<div className="rounded-md">
-					<span className="flex justify-center items-center text-sm mb-1 text-text ">
-						{message}
-					</span>
-					<div className="h-32 w-32 relative border-2 items-center rounded-md cursor-pointer bg-background border-primary border-dotted">
-						<input
-							type="file"
-							onChange={handleFile}
-							className="h-full w-full bg-green-200 opacity-0 z-10 absolute"
-							multiple="multiple"
-							name="files[]"
-						/>
-						<div className="flex justify-center items-center h-full w-full absolute z-1 top-0">
-							<div className="flex flex-col">
-								<i className="mdi mdi-folder-open text-[30px] text-gray-400 text-center"></i>
-								<span className="text-sm">{`Drag & Drop Files`}</span>
+			<div>
+				<div className="flex flex-row justify-start items-start px-2 py-2  bg-primary">
+					<div className="rounded-md">
+						<div className="h-32 w-32 relative border-2 items-center rounded-md cursor-pointer bg-background border-primary border-dotted">
+							<input
+								type="file"
+								onChange={handleFile}
+								className="h-full w-full bg-green-200 opacity-0 z-10 absolute"
+								multiple="multiple"
+								name="files[]"
+							/>
+							<div className="flex justify-center items-center h-full w-full absolute z-1 top-0">
+								<div className="flex flex-col">
+									<i className="mdi mdi-folder-open text-[30px] text-gray-400 text-center"></i>
+									<span className="text-sm">{`Drag & Drop Files`}</span>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				<div className="flex flex-col pl-5 gap-2 mt-2">
-					{files.map((file, key) => {
-						return (
-							<div key={key} className="flex flex-row overflow-hidden relative">
-								{!isLoading && (
-									<img
-										className="h-20 w-20 rounded-md"
-										src={URL.createObjectURL(file)}
-										alt="preview"
-										onClick={() => {
-											removeImage(file.name);
-										}}
-									/>
-								)}
-								{isLoading && <CircleLoader size={80} color="#FFFFFF" />}
-								<div className="flex flex-col">
-									<span className="pl-2 text-sm">{file.name}</span>
-									<span className="pl-2 text-sm">{file.size} bytes</span>
-									<span className="pl-2 text-sm">${file.price}</span>
-									<span className="pl-2 text-sm">{file.bundlrURL}</span>
+					<div className="flex flex-col pl-5 gap-2 mt-2">
+						{files.map((file, key) => {
+							return (
+								<div key={key} className="flex flex-row overflow-hidden relative">
+									{!isLoading && (
+										<img
+											className="h-20 w-20 rounded-md"
+											src={URL.createObjectURL(file)}
+											alt="preview"
+											onClick={() => {
+												removeImage(file.name);
+											}}
+										/>
+									)}
+									{isLoading && <CircleLoader size={80} color="#FFFFFF" />}
+									<div className="flex flex-col">
+										<span className="pl-2 text-sm">{file.name}</span>
+										<span className="pl-2 text-sm">{file.size} bytes</span>
+										<span className="pl-2 text-sm">${file.price}</span>
+										<span className="pl-2 text-sm">{file.bundlrURL}</span>
+									</div>
 								</div>
-							</div>
-						);
-					})}
+							);
+						})}
+					</div>
+				</div>
+				{props.showUpload && (
+					<div className="flex flex-row justify-end mb-1 mr-1">
+						{files.length == 0 && (
+							<button
+								type="button"
+								className="bg-secondary hover:text text-text py-1 px-5 rounded drop-shadow-lg disabled:opacity-100"
+								disabled
+							>
+								Upload
+							</button>
+						)}
+						{files.length > 0 && (
+							<button
+								type="button"
+								className="bg-secondary hover:text text-text py-1 px-5 rounded drop-shadow-lg"
+								onClick={upload}
+							>
+								Upload
+							</button>
+						)}
+					</div>
+				)}
+			</div>
+			<div>
+				<div className="text-sm flex flex-row justify-start">
+					<span className="text-errorText">{message}</span>
 				</div>
 			</div>
-			{props.showUpload && (
-				<div className="flex flex-row justify-end mb-1 mr-1">
-					{files.length == 0 && (
-						<button
-							type="button"
-							className="bg-secondary hover:text text-text py-1 px-5 rounded drop-shadow-lg disabled:opacity-100"
-							disabled
-						>
-							Upload
-						</button>
-					)}
-					{files.length > 0 && (
-						<button
-							type="button"
-							className="bg-secondary hover:text text-text py-1 px-5 rounded drop-shadow-lg"
-							onClick={upload}
-						>
-							Upload
-						</button>
-					)}
-				</div>
-			)}
 		</div>
 	);
 };
