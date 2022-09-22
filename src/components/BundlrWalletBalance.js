@@ -91,10 +91,6 @@ const BundlrWalletBalance = (props) => {
 		}
 	}, []);
 
-	const classNames = (...classes) => {
-		return classes.filter(Boolean).join(" ");
-	};
-
 	return (
 		<div className="flex flex-col md:flex-row items-center px-2 py-2 border-2 border-primary rounded-lg drop-shadow-lg">
 			{!isNaN(loadedBalanceUSD) && (
