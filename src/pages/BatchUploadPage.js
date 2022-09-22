@@ -18,12 +18,12 @@ const BatchUploadPage = () => {
 					<div className="max-w-lg">
 						<BundlrUpload maxPreview={1} showUpload={true} useDevnet={true} />
 					</div>
-					<p className="pl-1 pt-3 text-sm">Upload files to Bundlr.</p>
-					<p className="pl-1 text-sm">
+					<p className="pl-1 pt-3 text-sm font-bold">Upload files to Bundlr.</p>
+					<p className="pl-1 text-sm font-bold">
 						This component is the same as used for checking upload price. By setting
 						"showUpload" <br />
 						to true an upload button is added.
-						<blockquote className="mt-1">
+						<blockquote className="mt-2">
 							<pre>
 								<code>
 									{
@@ -34,7 +34,7 @@ const BatchUploadPage = () => {
 						</blockquote>
 					</p>
 				</div>
-				<div className="pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
+				<div className="hidden md:flex pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
 					<ColorPalettes />
 				</div>
 			</div>

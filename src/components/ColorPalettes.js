@@ -4,11 +4,11 @@ const ColorPalettes = () => {
 	return (
 		<div className="flex flex-col border-2 border-primary rounded-lg px-2 py-3 max-w-3xl">
 			<div className="mb-2">
-				<span className="text-base">Preview components using different colors</span>{" "}
+				<span className="text-base font-bold">Preview Components Using Different Colors</span>{" "}
 			</div>
 
-			<div className="flex flex-row">
-				<div className="px-1">
+			<div className="flex flex-row flex-wrap">
+				<div className="px-1 mt-5 md:mt-0">
 					<ColorPalette
 						bgColor="bg-[#05386b]"
 						primaryColor="bg-[#379683]"
@@ -18,7 +18,7 @@ const ColorPalettes = () => {
 						errorTextColor="bg-[#ff0000]"
 					/>
 				</div>
-				<div className="px-1">
+				<div className="px-1 mt-5 md:mt-0">
 					<ColorPalette
 						bgColor="bg-[#937DC2]"
 						primaryColor="bg-[#C689C6]"
@@ -28,7 +28,7 @@ const ColorPalettes = () => {
 						errorTextColor="bg-[#CD104D]"
 					/>
 				</div>
-				<div className="px-1">
+				<div className="px-1 mt-5 md:mt-0">
 					<ColorPalette
 						bgColor="bg-[#850E35]"
 						primaryColor="bg-[#EE6983]"
@@ -38,7 +38,7 @@ const ColorPalettes = () => {
 						errorTextColor="bg-[#FFF5E4]"
 					/>
 				</div>
-				<div className="px-1">
+				<div className="px-1 mt-5 md:mt-0">
 					<ColorPalette
 						bgColor="bg-[#3330E4]"
 						primaryColor="bg-[#F637EC]"
@@ -48,7 +48,7 @@ const ColorPalettes = () => {
 						errorTextColor="bg-[#FAEA48]"
 					/>
 				</div>
-				<div className="px-1">
+				<div className="px-1 mt-5 md:mt-0">
 					<ColorPalette
 						bgColor="bg-[#37E2D5]"
 						primaryColor="bg-[#C70A80]"
@@ -58,7 +58,7 @@ const ColorPalettes = () => {
 						errorTextColor="bg-[#FBCB0A]"
 					/>
 				</div>
-				<div className="px-1">
+				<div className="px-1 mt-5 md:mt-0">
 					<ColorPalette
 						bgColor="bg-[#16213E]"
 						primaryColor="bg-[#533483]"

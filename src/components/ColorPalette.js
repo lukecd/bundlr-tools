@@ -2,8 +2,6 @@ import React from "react";
 import classnames from "classnames";
 
 const ColorPalette = (props) => {
-	console.log("props.bgColor=", props.bgColor);
-
 	// converts bg-[#937DC2] to #937DC2
 	const trimVar = (toBeTrimmed) => {
 		return toBeTrimmed.substring(4, toBeTrimmed.length - 1);

@@ -18,18 +18,18 @@ const CheckPricePage = () => {
 					<div className="max-w-lg">
 						<BundlrUpload maxPreview={2} showUpload={false} />
 					</div>
-					<p className="pl-1 pt-3 text-sm">Check the current price to upload files.</p>
-					<p className="pl-1 text-sm">
+					<p className="pl-1 pt-3 text-sm font-bold">Check the current price to upload files.</p>
+					<p className="pl-1 text-sm font-bold">
 						You can restrict the types of files allowed to be uploaded. Currently image and text
 						only.
-						<blockquote className="mt-1">
+						<blockquote className="mt-2">
 							<pre>
 								<code>{"<BundlrUpload \n\tmaxPreview=2 \n\tshowUpload=false />"}</code>
 							</pre>
 						</blockquote>
 					</p>
 				</div>
-				<div className="pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
+				<div className="hidden md:flex pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
 					<ColorPalettes />
 				</div>
 			</div>

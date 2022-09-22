@@ -20,10 +20,15 @@ const AboutPage = () => {
 				<div className="pl-5 pr-5 md:pl-20 md:pr-20 w-full">
 					<div>
 						<p className="leading-7">
-							A series of React components for interacting with Bundlr. Just something I built
-							to teach me their web interface. Totally opensource, do with it as you wish.
-							It's been a crazy monsoon season this year in Bangkok, so I gave it a verdant
-							color theme.
+							A series of React components for interacting with{" "}
+							<a href="https://bundlr.network/" target="_blank" className="underline">
+								Bundlr.
+							</a>{" "}
+							Just something I built to teach me their web interface and practice my Tailwind.
+							Totally opensource, do with it as you wish. It's been a crazy monsoon season
+							this year in Bangkok, so I gave it a verdant color theme ... but then I figured
+							y'all might have other colors in mind, so I let you dynamically change colors
+							too.
 						</p>
 						<p className="ml-10 pr-10 md:ml-10 md:mt-5 md:pl-20 md:pr-20 leading-7">
 							<ol className="list-decimal list-outside">
@@ -72,7 +77,7 @@ const AboutPage = () => {
 						</p>
 					</div>
 				</div>
-				<div className="pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
+				<div className="hidden md:flex pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
 					<ColorPalettes />
 				</div>
 			</div>

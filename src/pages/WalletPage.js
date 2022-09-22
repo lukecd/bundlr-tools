@@ -27,9 +27,9 @@ const WalletPage = () => {
 							useDevnet={true}
 						/>
 					</div>
-					<p className="pt-3 text-sm">
+					<p className="pt-3 text-sm font-bold">
 						Show current balance using the BundlrWalletBalance component.
-						<blockquote className="mt-1">
+						<blockquote className="mt-2">
 							<pre>
 								<code>
 									{
@@ -45,16 +45,16 @@ const WalletPage = () => {
 					<div className="max-w-lg">
 						<BundlrFundWallet useDevnet={true} />
 					</div>
-					<p className="pl-1 pt-3 text-sm">
+					<p className="pl-1 pt-3 text-sm font-bold">
 						Allow users to fund their wallets using the BundlrFundWallet component.
-						<blockquote className="mt-1">
+						<blockquote className="mt-2">
 							<pre>
 								<code>{"<BundlrFundWallet \n\tuseDevnet=true />"}</code>
 							</pre>
 						</blockquote>
 					</p>
 				</div>
-				<div className="pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
+				<div className="hidden md:flex pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
 					<ColorPalettes />
 				</div>
 			</div>

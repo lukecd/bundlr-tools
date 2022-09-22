@@ -46,7 +46,7 @@ const BundlrWalletBalance = (props) => {
 						.toFixed(7, 2)
 						.toString(),
 				);
-			} else if (selected.name == "etherem") {
+			} else if (selected.name == "ethereum") {
 				setLoadedBalanceUSD(
 					bundlr.utils
 						.unitConverter(curBalance / ethPrice)
@@ -56,7 +56,7 @@ const BundlrWalletBalance = (props) => {
 			}
 		};
 		getLoadedBalance();
-	}, [signer, ethPrice, maticPrice]);
+	}, [selected, signer, ethPrice, maticPrice]);
 
 	useEffect(() => {
 		if (props.useDevnet) {
