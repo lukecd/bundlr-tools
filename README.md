@@ -52,3 +52,71 @@ function App() {
 
 export default App;
 ```
+
+You'll get a bunch of errors saying something like `BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.`
+
+To fix this you'll need to include NodeJS polyfills which are no longer included by default.
+
+Install first react-app-rewired, a package that allows for editing of the webpack config file, fixing the polyfill issue. Then install the missing dependencies.
+
+```
+npm install react-app-rewired
+
+npm install --save-dev crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url buffer process
+
+npm install browserify-zlib path-browserify path
+
+```
+
+At the root level of your project, create a new file called `config-overrides.js` and paste the following in
+
+```
+const webpack = require("webpack");
+module.exports = function override(config) {
+	const fallback = config.resolve.fallback || {};
+	Object.assign(fallback, {
+		crypto: require.resolve("crypto-browserify"),
+		stream: require.resolve("stream-browserify"),
+		assert: require.resolve("assert"),
+		http: require.resolve("stream-http"),
+		https: require.resolve("https-browserify"),
+		os: require.resolve("os-browserify"),
+		url: require.resolve("url"),
+		zlib: require.resolve("browserify-zlib"),
+	});
+	config.resolve.fallback = fallback;
+	config.plugins = (config.plugins || []).concat([
+		new webpack.ProvidePlugin({
+			process: "process/browser",
+			Buffer: ["buffer", "Buffer"],
+		}),
+	]);
+	return config;
+};
+```
+
+Override package.json to include the new webpack configuration. Look for this code block
+
+```
+
+"scripts": {
+	"start": "react-scripts start",
+	"build": "react-scripts build",
+	"test": "react-scripts test",
+	"eject": "react-scripts eject"
+ },
+```
+
+and replace it with this block
+
+```
+
+"scripts": {
+	"start": "react-app-rewired start",
+	"build": "react-app-rewired build",
+	"test": "react-app-rewired test",
+	"eject": "react-scripts eject"
+ },
+```
+
+Quit out of the React server and restart it with ` npm run start` you should be good to go.
