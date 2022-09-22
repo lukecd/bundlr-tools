@@ -157,28 +157,13 @@ const BundlrFundWallet = (props) => {
 		<div className="flex flex-col items-start px-2 py-2 border-2 border-primary rounded-lg drop-shadow-lg">
 			<div className="flex flex-row">
 				<div className="flex flex-col">
-					<div>
+					<div className="">
 						<input
-							class="rounded py-1 px-2 leading-tight focus:outline-none bg-primary text-text"
-							id="grid-first-name"
+							className="rounded py-1 px-2 leading-tight focus:outline-none bg-primary text-text"
 							type="number"
 							value={fundAmount}
 							onChange={(e) => setFundAmount(e.target.value)}
 						/>
-					</div>
-					<div>
-						{props.useDevnet && selected && selected.symbol == "MATIC" && (
-							<span className="text-sm">Balance {mumbaiBalance}</span>
-						)}
-						{props.useDevnet && selected && selected.symbol == "ETH" && (
-							<span className="text-sm">Balance {gorBalance}</span>
-						)}
-						{!props.useDevnet && selected && selected.symbol == "MATIC" && (
-							<span className="text-sm">Balance {maticBalance}</span>
-						)}
-						{!props.useDevnet && selected && selected.symbol == "ETH" && (
-							<span className="text-sm">Balance {ethBalance}</span>
-						)}
 					</div>
 				</div>
 				<div className="pl-3 w-48">
@@ -240,10 +225,10 @@ const BundlrFundWallet = (props) => {
 						</div>
 					</Listbox>
 				</div>
-				<div className="px-2 w-45">
+				<div className="pl-2 w-45">
 					{providerMatchNetwork && (
 						<button
-							class="bg-primary hover:bg-blue-700 text-text py-1 px-5 rounded"
+							class="bg-primary hover:bg-blue-700 text-text py-1 px-3 rounded"
 							onClick={fund}
 						>
 							Fund
@@ -251,16 +236,30 @@ const BundlrFundWallet = (props) => {
 					)}
 					{!providerMatchNetwork && (
 						<button
-							class="bg-primary hover:bg-blue-700 text-text py-1 px-5 rounded"
+							class="bg-primary hover:bg-blue-700 text-text py-1 px-3 rounded"
 							onClick={() => {
 								setProviderName(selected.providerName);
 								switchNetwork(selected.chainId);
 							}}
 						>
-							Switch Network
+							Switch Chain
 						</button>
 					)}
 				</div>
+			</div>
+			<div>
+				{props.useDevnet && selected && selected.symbol == "MATIC" && (
+					<span className="text-sm">Balance {mumbaiBalance}</span>
+				)}
+				{props.useDevnet && selected && selected.symbol == "ETH" && (
+					<span className="text-sm">Balance {gorBalance}</span>
+				)}
+				{!props.useDevnet && selected && selected.symbol == "MATIC" && (
+					<span className="text-sm">Balance {maticBalance}</span>
+				)}
+				{!props.useDevnet && selected && selected.symbol == "ETH" && (
+					<span className="text-sm">Balance {ethBalance}</span>
+				)}
 			</div>
 			<div className="text-sm flex flex-row justify-start">
 				<span className="text-errorText">{message}</span>

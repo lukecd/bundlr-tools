@@ -5,10 +5,10 @@ const BatchUploadPage = () => {
 	return (
 		<div
 			name="batch-upload"
-			className="w-full h-full md:h-screen overflow-visible bg-background text-text"
+			className="w-full h-full h-screen overflow-visible bg-background text-text"
 		>
 			<div className="flex flex-col justify-center items-start  h-full">
-				<div className="md:pl-20 md:pr-20 w-full">
+				<div className="pl-5 md:pl-20 md:pr-20 w-full">
 					<div className="text-left pb-8">
 						<p className="text-2xl md:text-4xl font-bold inline border-b-4 border-primary">
 							upload ...
@@ -16,8 +16,8 @@ const BatchUploadPage = () => {
 					</div>
 				</div>
 
-				<div className="pl-20 pr-20">
-					<div className="">
+				<div className="pl-5 pr-5 md:pl-20 md:pr-20 w-full">
+					<div className="max-w-lg">
 						<BundlrUpload maxPreview={1} showUpload={true} useDevnet={true} />
 					</div>
 					<p className="pl-1 pt-3 text-sm">Upload files to Bundlr.</p>

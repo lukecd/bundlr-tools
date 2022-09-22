@@ -8,7 +8,7 @@ const AboutPage = () => {
 	return (
 		<div name="about" className="w-full h-screen bg-background text-text">
 			<div className="flex flex-col justify-center items-start w-full h-full">
-				<div className="md:pl-20 md:pr-20 w-full">
+				<div className="pl-5 md:pl-20 md:pr-20 w-full">
 					<div className="text-left pb-8">
 						<p className="text-2xl md:text-4xl font-bold inline border-b-4 border-primary">
 							about ...
@@ -16,9 +16,9 @@ const AboutPage = () => {
 					</div>
 				</div>
 
-				<div className="px-5 w-full">
+				<div className="pl-5 pr-5 md:pl-20 md:pr-20 w-full">
 					<div>
-						<p className="md:pl-20 pr-20 leading-7">
+						<p className="leading-7">
 							A series of React components for interacting with Bundlr. Just something I built
 							to teach me their web interface. Totally opensource, do with it as you wish.
 							It's been a crazy monsoon season this year in Bangkok, so I gave it a verdant

@@ -8,9 +8,9 @@ const WalletPage = () => {
 	};
 
 	return (
-		<div name="wallet" className="w-full h-full md:h-screen overflow-visible bg-background text-text">
+		<div name="wallet" className="w-full h-full h-screen overflow-visible bg-background text-text">
 			<div className="flex flex-col justify-center items-start h-full">
-				<div className="md:pl-20 md:pr-20 w-full">
+				<div className="pl-5 md:pl-20 md:pr-20 w-full">
 					<div className="text-left pb-8">
 						<p className="text-2xl md:text-4xl font-bold inline border-b-4 border-primary">
 							wallet interactions ...
@@ -18,15 +18,15 @@ const WalletPage = () => {
 					</div>
 				</div>
 
-				<div className="pl-20 pr-20">
-					<div>
+				<div className="pl-5 pr-5 md:pl-20 md:pr-20 w-full">
+					<div className="max-w-lg">
 						<BundlrWalletBalance
 							showCryptoBalance={true}
 							showUSDBalance={true}
 							useDevnet={true}
 						/>
 					</div>
-					<p className="pl-1 pt-3 text-sm">
+					<p className="pt-3 text-sm">
 						Show current balance using the BundlrWalletBalance component.
 						<blockquote className="mt-1">
 							<pre>
@@ -40,8 +40,8 @@ const WalletPage = () => {
 					</p>
 				</div>
 
-				<div className="pl-20 pr-20 mt-10">
-					<div>
+				<div className="pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
+					<div className="max-w-lg">
 						<BundlrFundWallet useDevnet={true} />
 					</div>
 					<p className="pl-1 pt-3 text-sm">
