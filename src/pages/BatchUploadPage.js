@@ -1,12 +1,10 @@
 import React from "react";
 import BundlrUpload from "../components/BundlrUpload";
+import ColorPalettes from "../components/ColorPalettes";
 
 const BatchUploadPage = () => {
 	return (
-		<div
-			name="batch-upload"
-			className="w-full h-full h-screen overflow-visible bg-background text-text"
-		>
+		<div name="upload" className="w-full h-full h-screen overflow-visible bg-background text-text">
 			<div className="flex flex-col justify-center items-start  h-full">
 				<div className="pl-5 md:pl-20 md:pr-20 w-full">
 					<div className="text-left pb-8">
@@ -35,6 +33,9 @@ const BatchUploadPage = () => {
 							</pre>
 						</blockquote>
 					</p>
+				</div>
+				<div className="pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
+					<ColorPalettes />
 				</div>
 			</div>
 		</div>

@@ -31,7 +31,7 @@ function App() {
 	return (
 		<WagmiConfig client={wagmiClient}>
 			<RainbowKitProvider chains={chains}>
-				<div>
+				<div id="root">
 					<Navbar />
 					<AboutPage />
 					<WalletPage />

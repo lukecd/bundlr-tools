@@ -54,12 +54,12 @@ const Navbar = () => {
 				<li>
 					<Link
 						className="hover:border-background border-2 px-4 py-2"
-						to="batch-upload"
+						to="upload"
 						smooth={true}
 						offset={-100}
 						duration={500}
 					>
-						batch upload
+						upload
 					</Link>
 				</li>
 			</ul>
@@ -95,8 +95,8 @@ const Navbar = () => {
 					</Link>
 				</li>
 				<li className="py-6 text-4xl">
-					<Link onClick={handleClick} to="batch-upload" smooth={true} duration={500}>
-						batch upload
+					<Link onClick={handleClick} to="upload" smooth={true} duration={500}>
+						upload
 					</Link>
 				</li>
 			</ul>

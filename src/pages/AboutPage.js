@@ -1,4 +1,5 @@
 import React from "react";
+import ColorPalettes from "../components/ColorPalettes";
 
 /**
  *
@@ -70,6 +71,9 @@ const AboutPage = () => {
 							</ol>
 						</p>
 					</div>
+				</div>
+				<div className="pl-5 pr-5 pt-20 md:pl-20 md:pr-20 w-full">
+					<ColorPalettes />
 				</div>
 			</div>
 		</div>

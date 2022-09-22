@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--background: #05386b;
+	--primary: #379683;
+	--secondary: #5cdb95;
+	--tertiary: #8ee4af;
+	--text: #ffffff;
+	--errorText: #ff0000;
+}
+
 html {
 	width: 100%;
 	height: 100%;
