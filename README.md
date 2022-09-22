@@ -5,9 +5,9 @@ You can read more about it in this blog post:
 
 # React & Bundlr
 
-Bundlr fully supports React, however it takes a bit of customizing and tweaking to get things running right. You're welcome to just clone this project and do whatever you want with it ... but in case you just want to grab some of the components and throw them in your React project, here'a an overview of how to setup a brand new React project and Bundlr running.
+Bundlr fully supports React, however it takes a bit of customizing and tweaking to get things running right. You're welcome to just clone this project and do whatever you want with it ... but in case you just want to grab some of the components and throw them in your React project you'll need to go through a few extra steps.
 
-I pieced this all together using posts in the Bundlr Discord and this lovely post.
+I pieced this all together using posts in the Bundlr Discord and this post.
 https://www.alchemy.com/blog/how-to-polyfill-node-core-modules-in-webpack-5
 
 ## The Steps
@@ -53,17 +53,15 @@ function App() {
 export default App;
 ```
 
-You'll get a bunch of errors saying something like `BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.`
+Viewing that pae, you'll get a bunch of errors saying something like `BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.`
 
 To fix this you'll need to include NodeJS polyfills which are no longer included by default.
 
-Install first react-app-rewired, a package that allows for editing of the webpack config file, fixing the polyfill issue. Then install the missing dependencies.
+Install first react-app-rewired, a package that allows for editing of the webpack config file to fix polyfill issue. Then install the missing dependencies.
 
 ```
 npm install react-app-rewired
-
 npm install --save-dev crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url buffer process
-
 npm install browserify-zlib path-browserify path
 
 ```
