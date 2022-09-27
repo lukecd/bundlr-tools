@@ -71,7 +71,8 @@ const BundlrUpload = (props) => {
 			const fileType = newFiles[i]["type"];
 			newFiles[i]["price"] = await getPriceForFile(newFiles[i]);
 			const validImageTypes = ["image/gif", "image/jpeg", "image/png", "text/plain"];
-			if (validImageTypes.includes(fileType)) {
+			//if (validImageTypes.includes(fileType)) {
+			if (true) {
 				if (files.length >= props.maxPreview) {
 					files.shift();
 					setFile([...files, newFiles[i]]);
@@ -104,7 +105,6 @@ const BundlrUpload = (props) => {
 		uploader.setBatchSize(2);
 		uploader.setChunkSize(2_000_000);
 		uploader.on("chunkUpload", (e) => {});
-		console.log("uploader=", uploader);
 		for (let i = 0; i < files.length; i++) {
 			const imgStream = fileReaderStream(files[i]);
 
